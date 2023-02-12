@@ -1,4 +1,4 @@
-export const data = [
+export const paints = [
   {
     name: "Abaddon Black",
     type: "base",
@@ -12,7 +12,7 @@ export const data = [
   {
     name: "Balthasar Gold ",
     type: "base",
-    colorGroup: "brown",
+    colorGroup: "metallic",
   },
   {
     name: "Bugmans Glow",

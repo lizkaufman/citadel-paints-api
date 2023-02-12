@@ -4,6 +4,8 @@ import paintsRouter from "./routes/paints";
 const app: Express = express();
 const port = process.env.PORT;
 
+app.use(express.json());
+
 app.get("/paints", paintsRouter);
 
 app.get("/", (req: Request, res: Response) => {

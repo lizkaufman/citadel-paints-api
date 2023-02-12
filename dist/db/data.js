@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.data = void 0;
-exports.data = [
+exports.paints = void 0;
+exports.paints = [
     {
         name: "Abaddon Black",
         type: "base",
@@ -15,7 +15,7 @@ exports.data = [
     {
         name: "Balthasar Gold ",
         type: "base",
-        colorGroup: "brown",
+        colorGroup: "metallic",
     },
     {
         name: "Bugmans Glow",

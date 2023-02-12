@@ -13,48 +13,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const paints_1 = require("../models/paints");
 const paintsRouter = express_1.default.Router();
-paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.path);
     //search by paint name
     if (req.query.name !== undefined) {
-        return res.json({
+        const data = yield (0, paints_1.searchPaintsByName)(req.query.name);
+        res.json({
             success: true,
-            payload: `search by paint name: ${req.query.name}`,
+            message: `search by paint name: ${req.query.name}`,
+            payload: data,
         });
+        return;
     }
     //search by paint type
     if (req.query.type !== undefined) {
-        return res.json({
+        const data = yield (0, paints_1.searchPaintsByType)(req.query.type);
+        res.json({
             success: true,
-            payload: `search by paint type: ${req.query.type}`,
+            message: `search by paint type: ${req.query.type}`,
+            payload: data,
         });
+        return;
     }
     //search by color group
     if (req.query.colorGroup !== undefined) {
-        return res.json({
+        const data = yield (0, paints_1.searchPaintsByColorGroup)(req.query.colorGroup);
+        res.json({
             success: true,
-            payload: `search by color group: ${req.query.colorGroup}`,
+            message: `search by color group: ${req.query.colorGroup}`,
+            payload: data,
         });
+        return;
     }
     //get all paints
-    res.json({ success: true, payload: "all paints" });
+    const data = yield (0, paints_1.getAllPaints)();
+    res.json({ success: true, message: "all paints", payload: data });
 }));
-paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //get paint by id
-    res.json({ success: true, payload: `paint with id ${req.params.id}` });
-}));
-paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //post new paint
-    const newPaint = req.body;
-    res.json({ success: true, payload: `post paint ${newPaint.name}` });
-}));
-paintsRouter.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //update paint
-    const updatedPaint = req.body;
-    res.json({ success: true, payload: `update paint ${updatedPaint.name}` });
-}));
-paintsRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //delete paint
-    res.json({ success: true, payload: `delete paint ${req.params.id}` });
-}));
+// paintsRouter.get("/:id", async (req: Request, res: Response) => {
+//   //get paint by id
+//   res.json({ success: true, payload: `paint with id ${req.params.id}` });
+// });
+// paintsRouter.post("/", async (req: Request, res: Response) => {
+//   //post new paint
+//   const newPaint: Paint = req.body;
+//   res.json({ success: true, payload: `post paint ${newPaint.name}` });
+// });
+// paintsRouter.patch("/:id", async (req: Request, res: Response) => {
+//   //update paint
+//   const updatedPaint: Paint = req.body;
+//   res.json({ success: true, payload: `update paint ${updatedPaint.name}` });
+// });
+// paintsRouter.delete("/:id", async (req: Request, res: Response) => {
+//   //delete paint
+//   res.json({ success: true, payload: `delete paint ${req.params.id}` });
+// });
 exports.default = paintsRouter;
