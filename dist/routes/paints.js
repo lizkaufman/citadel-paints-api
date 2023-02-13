@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const paints_1 = require("../models/paints");
 const paintsRouter = express_1.default.Router();
-paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.path);
     //search by paint name
     if (req.query.name !== undefined) {

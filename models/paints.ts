@@ -27,5 +27,5 @@ export async function searchPaintsByColorGroup(
   );
 }
 
-//TODO:
+//TODO: Sort this out when adding in the proper database rather reading from the file!
 export async function getPaintById(id: number) {}

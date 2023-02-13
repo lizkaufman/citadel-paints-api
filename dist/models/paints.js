@@ -37,7 +37,7 @@ function searchPaintsByColorGroup(colorGroup) {
     });
 }
 exports.searchPaintsByColorGroup = searchPaintsByColorGroup;
-//TODO:
+//TODO: Sort this out when adding in the proper database rather reading from the file!
 function getPaintById(id) {
     return __awaiter(this, void 0, void 0, function* () { });
 }

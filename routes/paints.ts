@@ -9,7 +9,7 @@ import {
 
 const paintsRouter = express.Router();
 
-paintsRouter.get("/:id", async (req: Request, res: Response) => {
+paintsRouter.get("/", async (req: Request, res: Response) => {
   console.log(req.path);
   //search by paint name
   if (req.query.name !== undefined) {

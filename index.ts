@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import paintsRouter from "./routes/paints";
 
 const app: Express = express();
@@ -6,7 +6,12 @@ const port = process.env.PORT;
 
 app.use(express.json());
 
-app.get("/paints", paintsRouter);
+app.use("/", (req: Request, res: Response, next: NextFunction) => {
+  console.log(`${req.method} ${req.originalUrl}`);
+  next();
+});
+
+app.use("/paints", paintsRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server running");

@@ -8,7 +8,11 @@ const paints_1 = __importDefault(require("./routes/paints"));
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 app.use(express_1.default.json());
-app.get("/paints", paints_1.default);
+app.use("/", (req, res, next) => {
+    console.log(`${req.method} ${req.originalUrl}`);
+    next();
+});
+app.use("/paints", paints_1.default);
 app.get("/", (req, res) => {
     res.send("Express + TypeScript Server running");
 });
