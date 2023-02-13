@@ -21,36 +21,65 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     let data = null;
     //search by paint name
     if (req.query.name !== undefined) {
-        data = yield (0, paints_1.searchPaintsByName)(req.query.name);
-        res.json({
+        try {
+            data = yield (0, paints_1.searchPaintsByName)(req.query.name);
+        }
+        catch (err) {
+            return res.status(500).json({
+                success: false,
+                error: err.message,
+            });
+        }
+        return res.json({
             success: true,
             message: `search by paint name: ${req.query.name}`,
             payload: data,
         });
-        return;
     }
     //search by paint type
     if (req.query.type !== undefined) {
-        data = yield (0, paints_1.searchPaintsByType)(req.query.type);
-        res.json({
+        try {
+            data = yield (0, paints_1.searchPaintsByType)(req.query.type);
+        }
+        catch (err) {
+            return res.status(500).json({
+                success: false,
+                error: err.message,
+            });
+        }
+        return res.json({
             success: true,
             message: `search by paint type: ${req.query.type}`,
             payload: data,
         });
-        return;
     }
     //search by color group
     if (req.query.colorGroup !== undefined) {
-        data = yield (0, paints_1.searchPaintsByColorGroup)(req.query.colorGroup);
-        res.json({
+        try {
+            data = yield (0, paints_1.searchPaintsByColorGroup)(req.query.colorGroup);
+        }
+        catch (err) {
+            return res.status(500).json({
+                success: false,
+                error: err.message,
+            });
+        }
+        return res.json({
             success: true,
             message: `search by color group: ${req.query.colorGroup}`,
             payload: data,
         });
-        return;
     }
     //get all paints
-    data = yield (0, paints_1.getAllPaints)();
+    try {
+        data = yield (0, paints_1.getAllPaints)();
+    }
+    catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: err.message,
+        });
+    }
     res.json({ success: true, message: "all paints", payload: data });
 }));
 paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

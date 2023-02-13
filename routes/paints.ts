@@ -21,39 +21,64 @@ paintsRouter.get("/", async (req: Request, res: Response) => {
 
   //search by paint name
   if (req.query.name !== undefined) {
-    data = await searchPaintsByName(req.query.name as string);
-    res.json({
+    try {
+      data = await searchPaintsByName(req.query.name as string);
+    } catch (err: any) {
+      return res.status(500).json({
+        success: false,
+        error: err.message,
+      });
+    }
+    return res.json({
       success: true,
       message: `search by paint name: ${req.query.name}`,
       payload: data,
     });
-    return;
   }
 
   //search by paint type
   if (req.query.type !== undefined) {
-    data = await searchPaintsByType(req.query.type as string);
-    res.json({
+    try {
+      data = await searchPaintsByType(req.query.type as string);
+    } catch (err: any) {
+      return res.status(500).json({
+        success: false,
+        error: err.message,
+      });
+    }
+    return res.json({
       success: true,
       message: `search by paint type: ${req.query.type}`,
       payload: data,
     });
-    return;
   }
 
   //search by color group
   if (req.query.colorGroup !== undefined) {
-    data = await searchPaintsByColorGroup(req.query.colorGroup as string);
-    res.json({
+    try {
+      data = await searchPaintsByColorGroup(req.query.colorGroup as string);
+    } catch (err: any) {
+      return res.status(500).json({
+        success: false,
+        error: err.message,
+      });
+    }
+    return res.json({
       success: true,
       message: `search by color group: ${req.query.colorGroup}`,
       payload: data,
     });
-    return;
   }
 
   //get all paints
-  data = await getAllPaints();
+  try {
+    data = await getAllPaints();
+  } catch (err: any) {
+    return res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
   res.json({ success: true, message: "all paints", payload: data });
 });
 

@@ -13,9 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePaint = exports.updatePaint = exports.addNewPaint = exports.getPaintById = exports.searchPaintsByColorGroup = exports.searchPaintsByType = exports.searchPaintsByName = exports.getAllPaints = void 0;
-const data_1 = require("../db/data");
 const PaintSchema_1 = __importDefault(require("../db/PaintSchema"));
-//TODO:
+//TODO: Refactor to use teh function (err, docs) callback pattern!
 function getAllPaints() {
     return __awaiter(this, void 0, void 0, function* () {
         const paintsData = yield PaintSchema_1.default.find({});
@@ -26,28 +25,28 @@ exports.getAllPaints = getAllPaints;
 //TODO: Refactor to allow multiple search queries in one request (e.g. name and type)
 function searchPaintsByName(name) {
     return __awaiter(this, void 0, void 0, function* () {
-        //FIXME:
-        // return paints.filter((paint) =>
-        //   paint.name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
-        // );
-        const paintsData = yield PaintSchema_1.default.find({ name: /name/i });
+        const paintsData = yield PaintSchema_1.default.find({
+            name: { $regex: name, $options: "i" },
+        });
         return paintsData;
     });
 }
 exports.searchPaintsByName = searchPaintsByName;
 function searchPaintsByType(type) {
     return __awaiter(this, void 0, void 0, function* () {
-        //FIXME:
-        return data_1.paints.filter((paint) => paint.type.toLocaleLowerCase().includes(type.toLocaleLowerCase()));
+        const paintsData = yield PaintSchema_1.default.find({
+            type: { $regex: type, $options: "i" },
+        });
+        return paintsData;
     });
 }
 exports.searchPaintsByType = searchPaintsByType;
 function searchPaintsByColorGroup(colorGroup) {
     return __awaiter(this, void 0, void 0, function* () {
-        //FIXME:
-        return data_1.paints.filter((paint) => paint.colorGroup
-            .toLocaleLowerCase()
-            .includes(colorGroup.toLocaleLowerCase()));
+        const paintsData = yield PaintSchema_1.default.find({
+            colorGroup: { $regex: colorGroup, $options: "i" },
+        });
+        return paintsData;
     });
 }
 exports.searchPaintsByColorGroup = searchPaintsByColorGroup;
