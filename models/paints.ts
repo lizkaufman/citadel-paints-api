@@ -40,7 +40,13 @@ export async function getPaintById(id: string) {
 
 export async function addNewPaint(newPaint: Paint) {
   const paint = new paintModel(newPaint);
-
   await paint.save();
   return paint;
+}
+
+export async function updatePaint(id: string) {}
+
+export async function deletePaint(id: string) {
+  const deleted = await paintModel.findByIdAndDelete(id);
+  return deleted;
 }

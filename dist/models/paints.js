@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addNewPaint = exports.getPaintById = exports.searchPaintsByColorGroup = exports.searchPaintsByType = exports.searchPaintsByName = exports.getAllPaints = void 0;
+exports.deletePaint = exports.updatePaint = exports.addNewPaint = exports.getPaintById = exports.searchPaintsByColorGroup = exports.searchPaintsByType = exports.searchPaintsByName = exports.getAllPaints = void 0;
 const data_1 = require("../db/data");
 const PaintSchema_1 = __importDefault(require("../db/PaintSchema"));
 function getAllPaints() {
@@ -62,3 +62,14 @@ function addNewPaint(newPaint) {
     });
 }
 exports.addNewPaint = addNewPaint;
+function updatePaint(id) {
+    return __awaiter(this, void 0, void 0, function* () { });
+}
+exports.updatePaint = updatePaint;
+function deletePaint(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const deleted = yield PaintSchema_1.default.findByIdAndDelete(id);
+        return deleted;
+    });
+}
+exports.deletePaint = deletePaint;

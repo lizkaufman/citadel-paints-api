@@ -20,7 +20,7 @@ mongoose_1.default.connect(process.env.MONGODB_CONNECTION_STRING);
 const db = mongoose_1.default.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
-    console.log("Connected successfully");
+    console.log("Connected to database successfully");
 });
 const paintsRouter = express_1.default.Router();
 paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -93,8 +93,23 @@ paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
 //   const updatedPaint: Paint = req.body;
 //   res.json({ success: true, payload: `update paint ${updatedPaint.name}` });
 // });
-// paintsRouter.delete("/:id", async (req: Request, res: Response) => {
-//   //delete paint
-//   res.json({ success: true, payload: `delete paint ${req.params.id}` });
-// });
+paintsRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //delete paint
+    const { id } = req.params;
+    let data = null;
+    try {
+        data = yield (0, paints_1.deletePaint)(id);
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err,
+        });
+    }
+    res.json({
+        success: true,
+        message: `delete paint ${req.params.id}`,
+        payload: data,
+    });
+}));
 exports.default = paintsRouter;

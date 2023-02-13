@@ -7,6 +7,7 @@ import {
   searchPaintsByColorGroup,
   addNewPaint,
   getPaintById,
+  deletePaint,
 } from "../models/paints";
 
 import mongoose from "mongoose";
@@ -16,7 +17,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
-  console.log("Connected successfully");
+  console.log("Connected to database successfully");
 });
 
 const paintsRouter = express.Router();
@@ -67,6 +68,7 @@ paintsRouter.get("/:id", async (req: Request, res: Response) => {
   //get paint by id
   const { id } = req.params;
   const data = await getPaintById(id);
+
   res.json({
     success: true,
     message: `paint with id ${req.params.id}`,
@@ -99,9 +101,23 @@ paintsRouter.post("/", async (req: Request, res: Response) => {
 //   res.json({ success: true, payload: `update paint ${updatedPaint.name}` });
 // });
 
-// paintsRouter.delete("/:id", async (req: Request, res: Response) => {
-//   //delete paint
-//   res.json({ success: true, payload: `delete paint ${req.params.id}` });
-// });
+paintsRouter.delete("/:id", async (req: Request, res: Response) => {
+  //delete paint
+  const { id } = req.params;
+  let data = null;
+  try {
+    data = await deletePaint(id);
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err,
+    });
+  }
+  res.json({
+    success: true,
+    message: `delete paint ${req.params.id}`,
+    payload: data,
+  });
+});
 
 export default paintsRouter;
