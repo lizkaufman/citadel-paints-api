@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePaint = exports.updatePaint = exports.addNewPaint = exports.getPaintById = exports.searchPaintsByColorGroup = exports.searchPaintsByType = exports.searchPaintsByName = exports.getAllPaints = void 0;
 const data_1 = require("../db/data");
 const PaintSchema_1 = __importDefault(require("../db/PaintSchema"));
+//TODO:
 function getAllPaints() {
     return __awaiter(this, void 0, void 0, function* () {
         const paintsData = yield PaintSchema_1.default.find({});
@@ -25,6 +26,7 @@ exports.getAllPaints = getAllPaints;
 //TODO: Refactor to allow multiple search queries in one request (e.g. name and type)
 function searchPaintsByName(name) {
     return __awaiter(this, void 0, void 0, function* () {
+        //FIXME:
         // return paints.filter((paint) =>
         //   paint.name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
         // );
@@ -35,12 +37,14 @@ function searchPaintsByName(name) {
 exports.searchPaintsByName = searchPaintsByName;
 function searchPaintsByType(type) {
     return __awaiter(this, void 0, void 0, function* () {
+        //FIXME:
         return data_1.paints.filter((paint) => paint.type.toLocaleLowerCase().includes(type.toLocaleLowerCase()));
     });
 }
 exports.searchPaintsByType = searchPaintsByType;
 function searchPaintsByColorGroup(colorGroup) {
     return __awaiter(this, void 0, void 0, function* () {
+        //FIXME:
         return data_1.paints.filter((paint) => paint.colorGroup
             .toLocaleLowerCase()
             .includes(colorGroup.toLocaleLowerCase()));
@@ -54,22 +58,25 @@ function getPaintById(id) {
     });
 }
 exports.getPaintById = getPaintById;
-function addNewPaint(newPaint) {
+function addNewPaint(paintToAdd) {
     return __awaiter(this, void 0, void 0, function* () {
-        const paint = new PaintSchema_1.default(newPaint);
-        yield paint.save();
-        return paint;
+        const newPaint = new PaintSchema_1.default(paintToAdd);
+        yield newPaint.save();
+        return newPaint;
     });
 }
 exports.addNewPaint = addNewPaint;
-function updatePaint(id) {
-    return __awaiter(this, void 0, void 0, function* () { });
+function updatePaint(id, updatedPaintInfo) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const updatedPaint = yield PaintSchema_1.default.findByIdAndUpdate(id, updatedPaintInfo);
+        return updatedPaint;
+    });
 }
 exports.updatePaint = updatePaint;
 function deletePaint(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        const deleted = yield PaintSchema_1.default.findByIdAndDelete(id);
-        return deleted;
+        const deletedPaint = yield PaintSchema_1.default.findByIdAndDelete(id);
+        return deletedPaint;
     });
 }
 exports.deletePaint = deletePaint;

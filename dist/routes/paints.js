@@ -14,20 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const paints_1 = require("../models/paints");
-const mongoose_1 = __importDefault(require("mongoose"));
-mongoose_1.default.set("strictQuery", false);
-mongoose_1.default.connect(process.env.MONGODB_CONNECTION_STRING);
-const db = mongoose_1.default.connection;
-db.on("error", console.error.bind(console, "connection error: "));
-db.once("open", function () {
-    console.log("Connected to database successfully");
-});
+const index_1 = require("../db/index");
+(0, index_1.connectToDatabase)();
 const paintsRouter = express_1.default.Router();
 paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.path);
+    let data = null;
     //search by paint name
     if (req.query.name !== undefined) {
-        const data = yield (0, paints_1.searchPaintsByName)(req.query.name);
+        data = yield (0, paints_1.searchPaintsByName)(req.query.name);
         res.json({
             success: true,
             message: `search by paint name: ${req.query.name}`,
@@ -37,7 +31,7 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     //search by paint type
     if (req.query.type !== undefined) {
-        const data = yield (0, paints_1.searchPaintsByType)(req.query.type);
+        data = yield (0, paints_1.searchPaintsByType)(req.query.type);
         res.json({
             success: true,
             message: `search by paint type: ${req.query.type}`,
@@ -47,7 +41,7 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     //search by color group
     if (req.query.colorGroup !== undefined) {
-        const data = yield (0, paints_1.searchPaintsByColorGroup)(req.query.colorGroup);
+        data = yield (0, paints_1.searchPaintsByColorGroup)(req.query.colorGroup);
         res.json({
             success: true,
             message: `search by color group: ${req.query.colorGroup}`,
@@ -56,13 +50,22 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     //get all paints
-    const data = yield (0, paints_1.getAllPaints)();
+    data = yield (0, paints_1.getAllPaints)();
     res.json({ success: true, message: "all paints", payload: data });
 }));
 paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //get paint by id
     const { id } = req.params;
-    const data = yield (0, paints_1.getPaintById)(id);
+    let data = null;
+    try {
+        data = yield (0, paints_1.getPaintById)(id);
+    }
+    catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: err.message,
+        });
+    }
     res.json({
         success: true,
         message: `paint with id ${req.params.id}`,
@@ -77,9 +80,9 @@ paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
         data = yield (0, paints_1.addNewPaint)(newPaint);
     }
     catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
-            error: err,
+            error: err.message,
         });
     }
     res.status(201).json({
@@ -88,11 +91,26 @@ paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
         payload: data,
     });
 }));
-// paintsRouter.patch("/:id", async (req: Request, res: Response) => {
-//   //update paint
-//   const updatedPaint: Paint = req.body;
-//   res.json({ success: true, payload: `update paint ${updatedPaint.name}` });
-// });
+paintsRouter.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //update paint
+    const updatedPaintInfo = req.body;
+    const { id } = req.params;
+    let data = null;
+    try {
+        data = yield (0, paints_1.updatePaint)(id, updatedPaintInfo);
+    }
+    catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: err.message,
+        });
+    }
+    res.status(201).json({
+        success: true,
+        message: `updated paint ${updatedPaintInfo.name}`,
+        payload: data,
+    });
+}));
 paintsRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //delete paint
     const { id } = req.params;
@@ -101,9 +119,9 @@ paintsRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, func
         data = yield (0, paints_1.deletePaint)(id);
     }
     catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
-            error: err,
+            error: err.message,
         });
     }
     res.json({
