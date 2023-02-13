@@ -6,7 +6,9 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q -r dotenv/config dist/index.js\""
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q -r dotenv/config dist/index.js\"",
+    "db:populate": "concurrently \"npx tsc\" \"node -r dotenv/config dist/db/scripts/populatePaints.js\"",
+    "db:deleteAll": "concurrently \"npx tsc\" \"node -r dotenv/config dist/db/scripts/deletePaints.js\""
   },
   "keywords": [],
   "author": "",

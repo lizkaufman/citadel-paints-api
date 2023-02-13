@@ -82,8 +82,8 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     res.json({ success: true, message: "all paints", payload: data });
 }));
+//get paint by id
 paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //get paint by id
     const { id } = req.params;
     let data = null;
     try {
@@ -101,8 +101,8 @@ paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
         payload: data,
     });
 }));
+//post new paint
 paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //post new paint
     const newPaint = req.body;
     let data = null;
     try {
@@ -120,8 +120,8 @@ paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
         payload: data,
     });
 }));
+//update paint
 paintsRouter.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //update paint
     const updatedPaintInfo = req.body;
     const { id } = req.params;
     let data = null;
@@ -140,8 +140,8 @@ paintsRouter.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, funct
         payload: data,
     });
 }));
+//delete paint
 paintsRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //delete paint
     const { id } = req.params;
     let data = null;
     try {

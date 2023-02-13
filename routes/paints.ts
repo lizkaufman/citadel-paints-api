@@ -82,8 +82,8 @@ paintsRouter.get("/", async (req: Request, res: Response) => {
   res.json({ success: true, message: "all paints", payload: data });
 });
 
+//get paint by id
 paintsRouter.get("/:id", async (req: Request, res: Response) => {
-  //get paint by id
   const { id } = req.params;
   let data = null;
   try {
@@ -101,8 +101,8 @@ paintsRouter.get("/:id", async (req: Request, res: Response) => {
   });
 });
 
+//post new paint
 paintsRouter.post("/", async (req: Request, res: Response) => {
-  //post new paint
   const newPaint: Paint = req.body;
   let data = null;
   try {
@@ -120,8 +120,8 @@ paintsRouter.post("/", async (req: Request, res: Response) => {
   });
 });
 
+//update paint
 paintsRouter.patch("/:id", async (req: Request, res: Response) => {
-  //update paint
   const updatedPaintInfo: Paint = req.body;
   const { id } = req.params;
   let data = null;
@@ -140,8 +140,8 @@ paintsRouter.patch("/:id", async (req: Request, res: Response) => {
   });
 });
 
+//delete paint
 paintsRouter.delete("/:id", async (req: Request, res: Response) => {
-  //delete paint
   const { id } = req.params;
   let data = null;
   try {

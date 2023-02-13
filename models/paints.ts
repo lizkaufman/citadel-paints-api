@@ -1,8 +1,8 @@
 import { Paint } from "../libs/IPaint";
-import { paints } from "../db/data";
+import { paints } from "../db/scripts/data";
 import paintModel from "../db/PaintSchema";
 
-//TODO: Refactor to use teh function (err, docs) callback pattern!
+//TODO: Refactor to use the function (err, docs) callback pattern!
 
 export async function getAllPaints(): Promise<Paint[]> {
   const paintsData = await paintModel.find({});

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePaint = exports.updatePaint = exports.addNewPaint = exports.getPaintById = exports.searchPaintsByColorGroup = exports.searchPaintsByType = exports.searchPaintsByName = exports.getAllPaints = void 0;
 const PaintSchema_1 = __importDefault(require("../db/PaintSchema"));
-//TODO: Refactor to use teh function (err, docs) callback pattern!
+//TODO: Refactor to use the function (err, docs) callback pattern!
 function getAllPaints() {
     return __awaiter(this, void 0, void 0, function* () {
         const paintsData = yield PaintSchema_1.default.find({});
