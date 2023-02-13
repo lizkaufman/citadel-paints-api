@@ -19,3 +19,4 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
+//TODO: In future iteration, have app.listen in a separate file for mocking/testing purposes.

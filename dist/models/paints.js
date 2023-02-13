@@ -8,12 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPaintById = exports.searchPaintsByColorGroup = exports.searchPaintsByType = exports.searchPaintsByName = exports.getAllPaints = void 0;
+exports.addNewPaint = exports.getPaintById = exports.searchPaintsByColorGroup = exports.searchPaintsByType = exports.searchPaintsByName = exports.getAllPaints = void 0;
 const data_1 = require("../db/data");
+const PaintSchema_1 = __importDefault(require("../db/PaintSchema"));
 function getAllPaints() {
     return __awaiter(this, void 0, void 0, function* () {
-        return data_1.paints;
+        const paintsData = yield PaintSchema_1.default.find({});
+        return paintsData;
     });
 }
 exports.getAllPaints = getAllPaints;
@@ -37,8 +42,17 @@ function searchPaintsByColorGroup(colorGroup) {
     });
 }
 exports.searchPaintsByColorGroup = searchPaintsByColorGroup;
-//TODO: Sort this out when adding in the proper database rather reading from the file!
 function getPaintById(id) {
-    return __awaiter(this, void 0, void 0, function* () { });
+    return __awaiter(this, void 0, void 0, function* () {
+        //TODO: Sort this out when adding in the proper database rather reading from the file!
+    });
 }
 exports.getPaintById = getPaintById;
+function addNewPaint(newPaint) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const paint = new PaintSchema_1.default(newPaint);
+        yield paint.save();
+        return paint;
+    });
+}
+exports.addNewPaint = addNewPaint;

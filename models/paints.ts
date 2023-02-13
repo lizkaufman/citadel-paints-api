@@ -1,8 +1,10 @@
 import { Paint } from "../libs/IPaint";
 import { paints } from "../db/data";
+import paintModel from "../db/PaintSchema";
 
 export async function getAllPaints(): Promise<Paint[]> {
-  return paints;
+  const paintsData = await paintModel.find({});
+  return paintsData;
 }
 
 export async function searchPaintsByName(name: string): Promise<Paint[]> {
@@ -27,5 +29,13 @@ export async function searchPaintsByColorGroup(
   );
 }
 
-//TODO: Sort this out when adding in the proper database rather reading from the file!
-export async function getPaintById(id: number) {}
+export async function getPaintById(id: number) {
+  //TODO: Sort this out when adding in the proper database rather reading from the file!
+}
+
+export async function addNewPaint(newPaint: Paint) {
+  const paint = new paintModel(newPaint);
+
+  await paint.save();
+  return paint;
+}

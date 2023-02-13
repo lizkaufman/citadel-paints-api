@@ -14,6 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const paints_1 = require("../models/paints");
+const mongoose_1 = __importDefault(require("mongoose"));
+mongoose_1.default.set("strictQuery", false);
+mongoose_1.default.connect(process.env.MONGODB_CONNECTION_STRING);
+const db = mongoose_1.default.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+    console.log("Connected successfully");
+});
 const paintsRouter = express_1.default.Router();
 paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.path);
@@ -55,11 +63,25 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
 //   //get paint by id
 //   res.json({ success: true, payload: `paint with id ${req.params.id}` });
 // });
-// paintsRouter.post("/", async (req: Request, res: Response) => {
-//   //post new paint
-//   const newPaint: Paint = req.body;
-//   res.json({ success: true, payload: `post paint ${newPaint.name}` });
-// });
+paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //post new paint
+    const newPaint = req.body;
+    let data = null;
+    try {
+        data = yield (0, paints_1.addNewPaint)(newPaint);
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err,
+        });
+    }
+    res.status(201).json({
+        success: true,
+        message: `post paint ${newPaint.name}`,
+        payload: data,
+    });
+}));
 // paintsRouter.patch("/:id", async (req: Request, res: Response) => {
 //   //update paint
 //   const updatedPaint: Paint = req.body;

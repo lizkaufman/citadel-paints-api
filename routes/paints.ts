@@ -5,7 +5,18 @@ import {
   searchPaintsByName,
   searchPaintsByType,
   searchPaintsByColorGroup,
+  addNewPaint,
 } from "../models/paints";
+
+import mongoose from "mongoose";
+
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected successfully");
+});
 
 const paintsRouter = express.Router();
 
@@ -56,11 +67,24 @@ paintsRouter.get("/", async (req: Request, res: Response) => {
 //   res.json({ success: true, payload: `paint with id ${req.params.id}` });
 // });
 
-// paintsRouter.post("/", async (req: Request, res: Response) => {
-//   //post new paint
-//   const newPaint: Paint = req.body;
-//   res.json({ success: true, payload: `post paint ${newPaint.name}` });
-// });
+paintsRouter.post("/", async (req: Request, res: Response) => {
+  //post new paint
+  const newPaint: Paint = req.body;
+  let data = null;
+  try {
+    data = await addNewPaint(newPaint);
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err,
+    });
+  }
+  res.status(201).json({
+    success: true,
+    message: `post paint ${newPaint.name}`,
+    payload: data,
+  });
+});
 
 // paintsRouter.patch("/:id", async (req: Request, res: Response) => {
 //   //update paint
