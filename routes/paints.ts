@@ -6,6 +6,7 @@ import {
   searchPaintsByType,
   searchPaintsByColorGroup,
   addNewPaint,
+  getPaintById,
 } from "../models/paints";
 
 import mongoose from "mongoose";
@@ -62,10 +63,16 @@ paintsRouter.get("/", async (req: Request, res: Response) => {
   res.json({ success: true, message: "all paints", payload: data });
 });
 
-// paintsRouter.get("/:id", async (req: Request, res: Response) => {
-//   //get paint by id
-//   res.json({ success: true, payload: `paint with id ${req.params.id}` });
-// });
+paintsRouter.get("/:id", async (req: Request, res: Response) => {
+  //get paint by id
+  const { id } = req.params;
+  const data = await getPaintById(id);
+  res.json({
+    success: true,
+    message: `paint with id ${req.params.id}`,
+    payload: data,
+  });
+});
 
 paintsRouter.post("/", async (req: Request, res: Response) => {
   //post new paint

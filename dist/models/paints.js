@@ -22,9 +22,14 @@ function getAllPaints() {
     });
 }
 exports.getAllPaints = getAllPaints;
+//TODO: Refactor to allow multiple search queries in one request (e.g. name and type)
 function searchPaintsByName(name) {
     return __awaiter(this, void 0, void 0, function* () {
-        return data_1.paints.filter((paint) => paint.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()));
+        // return paints.filter((paint) =>
+        //   paint.name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
+        // );
+        const paintsData = yield PaintSchema_1.default.find({ name: /name/i });
+        return paintsData;
     });
 }
 exports.searchPaintsByName = searchPaintsByName;
@@ -44,7 +49,8 @@ function searchPaintsByColorGroup(colorGroup) {
 exports.searchPaintsByColorGroup = searchPaintsByColorGroup;
 function getPaintById(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        //TODO: Sort this out when adding in the proper database rather reading from the file!
+        const paintsData = yield PaintSchema_1.default.findById(id);
+        return paintsData;
     });
 }
 exports.getPaintById = getPaintById;

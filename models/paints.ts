@@ -7,10 +7,14 @@ export async function getAllPaints(): Promise<Paint[]> {
   return paintsData;
 }
 
+//TODO: Refactor to allow multiple search queries in one request (e.g. name and type)
+
 export async function searchPaintsByName(name: string): Promise<Paint[]> {
-  return paints.filter((paint) =>
-    paint.name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
-  );
+  // return paints.filter((paint) =>
+  //   paint.name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
+  // );
+  const paintsData = await paintModel.find({ name: /name/i });
+  return paintsData;
 }
 
 export async function searchPaintsByType(type: string): Promise<Paint[]> {
@@ -29,8 +33,9 @@ export async function searchPaintsByColorGroup(
   );
 }
 
-export async function getPaintById(id: number) {
-  //TODO: Sort this out when adding in the proper database rather reading from the file!
+export async function getPaintById(id: string) {
+  const paintsData = await paintModel.findById(id);
+  return paintsData;
 }
 
 export async function addNewPaint(newPaint: Paint) {

@@ -59,10 +59,16 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const data = yield (0, paints_1.getAllPaints)();
     res.json({ success: true, message: "all paints", payload: data });
 }));
-// paintsRouter.get("/:id", async (req: Request, res: Response) => {
-//   //get paint by id
-//   res.json({ success: true, payload: `paint with id ${req.params.id}` });
-// });
+paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //get paint by id
+    const { id } = req.params;
+    const data = yield (0, paints_1.getPaintById)(id);
+    res.json({
+        success: true,
+        message: `paint with id ${req.params.id}`,
+        payload: data,
+    });
+}));
 paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //post new paint
     const newPaint = req.body;
