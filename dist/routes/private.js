@@ -14,15 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const paints_1 = require("../models/paints");
-const db_1 = require("../db");
-(0, db_1.connectToDatabase)();
-const paintsRouter = express_1.default.Router();
-paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const index_1 = require("../db/index");
+(0, index_1.connectToDatabase)();
+const editRouter = express_1.default.Router();
+editRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let data = null;
     //search by paint name
     if (req.query.name !== undefined) {
         try {
-            data = yield (0, paints_1.searchPaintsByName)(req.query.name);
+            data = yield searchPaintsByName(req.query.name);
         }
         catch (err) {
             return res.status(500).json({
@@ -39,7 +39,7 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     //search by paint type
     if (req.query.type !== undefined) {
         try {
-            data = yield (0, paints_1.searchPaintsByType)(req.query.type);
+            data = yield searchPaintsByType(req.query.type);
         }
         catch (err) {
             return res.status(500).json({
@@ -56,7 +56,7 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     //search by color group
     if (req.query.colorGroup !== undefined) {
         try {
-            data = yield (0, paints_1.searchPaintsByColorGroup)(req.query.colorGroup);
+            data = yield searchPaintsByColorGroup(req.query.colorGroup);
         }
         catch (err) {
             return res.status(500).json({
@@ -72,7 +72,7 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     //get all paints
     try {
-        data = yield (0, paints_1.getAllPaints)();
+        data = yield getAllPaints();
     }
     catch (err) {
         return res.status(500).json({
@@ -83,11 +83,11 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.json({ success: true, message: "all paints", payload: data });
 }));
 //get paint by id
-paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+editRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     let data = null;
     try {
-        data = yield (0, paints_1.getPaintById)(id);
+        data = yield getPaintById(id);
     }
     catch (err) {
         return res.status(500).json({
@@ -102,7 +102,7 @@ paintsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
     });
 }));
 //post new paint
-paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+editRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newPaint = req.body;
     let data = null;
     try {
@@ -121,7 +121,7 @@ paintsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
     });
 }));
 //update paint
-paintsRouter.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+editRouter.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const updatedPaintInfo = req.body;
     const { id } = req.params;
     let data = null;
@@ -141,7 +141,7 @@ paintsRouter.patch("/:id", (req, res) => __awaiter(void 0, void 0, void 0, funct
     });
 }));
 //delete paint
-paintsRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+editRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     let data = null;
     try {
@@ -159,4 +159,4 @@ paintsRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, func
         payload: data,
     });
 }));
-exports.default = paintsRouter;
+exports.default = editRouter;

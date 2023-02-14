@@ -10,7 +10,7 @@ import {
   deletePaint,
   updatePaint,
 } from "../models/paints";
-import { connectToDatabase } from "../db/index";
+import { connectToDatabase } from "../db";
 
 connectToDatabase();
 

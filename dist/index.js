@@ -17,6 +17,6 @@ app.get("/", (req, res) => {
     res.send("Express + TypeScript Server running");
 });
 app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+    console.log(`⚡️[server]: Server is running at port ${port}`);
 });
 //TODO: In future iteration, have app.listen in a separate file for mocking/testing purposes.
