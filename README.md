@@ -1,3 +1,7 @@
+## API documentation
+
+[Click here to view full documentation.](https://documenter.getpostman.com/view/25853651/2s93CPpWv4)
+
 ## Resources used
 
 - [How to set up TypeScript with Node.js and Express](https://blog.logrocket.com/how-to-set-up-node-typescript-express/)
