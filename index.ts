@@ -14,7 +14,9 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
 app.use("/paints", paintsRouter);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server running");
+  res.send(
+    "Welcome to the paints API! Send a GET request to /paints to start requesting paints data."
+  );
 });
 
 app.listen(port, () => {
