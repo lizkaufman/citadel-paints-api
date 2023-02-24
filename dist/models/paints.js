@@ -22,7 +22,6 @@ function getAllPaints() {
     });
 }
 exports.getAllPaints = getAllPaints;
-//TODO: Refactor to allow multiple search queries in one request (e.g. name and type)
 function searchPaintsByName(name) {
     return __awaiter(this, void 0, void 0, function* () {
         const paintsData = yield PaintSchema_1.default.find({

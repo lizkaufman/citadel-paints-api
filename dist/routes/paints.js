@@ -36,6 +36,24 @@ paintsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* 
             payload: data,
         });
     }
+    //search by both type and color group
+    if (req.query.type !== undefined && req.query.colorGroup !== undefined) {
+        try {
+            const typeResults = yield (0, paints_1.searchPaintsByType)(req.query.type);
+            data = typeResults.filter((paint) => paint.colorGroup === req.query.colorGroup);
+        }
+        catch (err) {
+            return res.status(500).json({
+                success: false,
+                error: err.message,
+            });
+        }
+        return res.json({
+            success: true,
+            message: `search by paint type: ${req.query.type}`,
+            payload: data,
+        });
+    }
     //search by paint type
     if (req.query.type !== undefined) {
         try {

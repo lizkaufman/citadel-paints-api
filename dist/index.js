@@ -14,7 +14,7 @@ app.use("/", (req, res, next) => {
 });
 app.use("/paints", paints_1.default);
 app.get("/", (req, res) => {
-    res.send("Express + TypeScript Server running");
+    res.send("Welcome to the paints API! Send a GET request to /paints to start requesting paints data.");
 });
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at port ${port}`);

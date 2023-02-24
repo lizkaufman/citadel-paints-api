@@ -9,8 +9,6 @@ export async function getAllPaints(): Promise<Paint[]> {
   return paintsData;
 }
 
-//TODO: Refactor to allow multiple search queries in one request (e.g. name and type)
-
 export async function searchPaintsByName(name: string): Promise<Paint[]> {
   const paintsData = await paintModel.find({
     name: { $regex: name, $options: "i" },
