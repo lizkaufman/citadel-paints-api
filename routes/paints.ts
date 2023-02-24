@@ -122,61 +122,61 @@ paintsRouter.get("/:id", async (req: Request, res: Response) => {
 });
 
 //post new paint
-paintsRouter.post("/", async (req: Request, res: Response) => {
-  const newPaint: Paint = req.body;
-  let data = null;
-  try {
-    data = await addNewPaint(newPaint);
-  } catch (err: any) {
-    return res.status(500).json({
-      success: false,
-      error: err.message,
-    });
-  }
-  res.status(201).json({
-    success: true,
-    message: `post paint ${newPaint.name}`,
-    payload: data,
-  });
-});
+// paintsRouter.post("/", async (req: Request, res: Response) => {
+//   const newPaint: Paint = req.body;
+//   let data = null;
+//   try {
+//     data = await addNewPaint(newPaint);
+//   } catch (err: any) {
+//     return res.status(500).json({
+//       success: false,
+//       error: err.message,
+//     });
+//   }
+//   res.status(201).json({
+//     success: true,
+//     message: `post paint ${newPaint.name}`,
+//     payload: data,
+//   });
+// });
 
 //update paint
-paintsRouter.patch("/:id", async (req: Request, res: Response) => {
-  const updatedPaintInfo: Paint = req.body;
-  const { id } = req.params;
-  let data = null;
-  try {
-    data = await updatePaint(id, updatedPaintInfo);
-  } catch (err: any) {
-    return res.status(500).json({
-      success: false,
-      error: err.message,
-    });
-  }
-  res.status(201).json({
-    success: true,
-    message: `updated paint ${updatedPaintInfo.name}`,
-    payload: data,
-  });
-});
+// paintsRouter.patch("/:id", async (req: Request, res: Response) => {
+//   const updatedPaintInfo: Paint = req.body;
+//   const { id } = req.params;
+//   let data = null;
+//   try {
+//     data = await updatePaint(id, updatedPaintInfo);
+//   } catch (err: any) {
+//     return res.status(500).json({
+//       success: false,
+//       error: err.message,
+//     });
+//   }
+//   res.status(201).json({
+//     success: true,
+//     message: `updated paint ${updatedPaintInfo.name}`,
+//     payload: data,
+//   });
+// });
 
-//delete paint
-paintsRouter.delete("/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-  let data = null;
-  try {
-    data = await deletePaint(id);
-  } catch (err: any) {
-    return res.status(500).json({
-      success: false,
-      error: err.message,
-    });
-  }
-  res.json({
-    success: true,
-    message: `delete paint ${req.params.id}`,
-    payload: data,
-  });
-});
+// //delete paint
+// paintsRouter.delete("/:id", async (req: Request, res: Response) => {
+//   const { id } = req.params;
+//   let data = null;
+//   try {
+//     data = await deletePaint(id);
+//   } catch (err: any) {
+//     return res.status(500).json({
+//       success: false,
+//       error: err.message,
+//     });
+//   }
+//   res.json({
+//     success: true,
+//     message: `delete paint ${req.params.id}`,
+//     payload: data,
+//   });
+// });
 
 export default paintsRouter;
